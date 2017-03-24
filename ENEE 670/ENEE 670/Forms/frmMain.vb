@@ -12,6 +12,7 @@
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         MatLabHandle = CreateObject("Matlab.Application")
         MatLabHandle.Execute("cd " + Application.StartupPath)
+        modSystemStatus.Initialize()
     End Sub
 
     'TODO: Move this to module
@@ -64,6 +65,12 @@
         txtCurrentCostPerSecond.Text = FormatNumber((CDbl(txtCost_Per_Gram_Copper_Sulfate.Text) * CDbl(txtGrams_CuS_Per_Second.Text)) + (CDbl(txtCost_Per_Gram_Ammonia.Text) * CDbl(txtGrams_NH3_Per_Second.Text)) + (CDbl(txtCost_Per_Gram_Sulfuric_Acid.Text) * CDbl(txtGrams_H2SO4_Per_Second.Text)), 2)
         ' Update current segment cost per liter
         txtCurrentCostPerLiter.Text = FormatNumber((CDbl(txtCurrentCostPerSecond.Text) / CDbl(txtVolumetricFlowRate.Text)), 4)
+
+        modSystemStatus.writeToLog({DateTime.Now.ToString(), "System Status Message,", ",,,,,,", 'Skip the entries for the Start Command so the headers align
+                                    txtVolumetricFlowRate.Text, txtHydrogenSulfideConcentration_Initial.Text, txtAmmoniaConcentration_Initial.Text,
+                                    txtWaterConcentration.Text, txtMaxPressure.Text, txtCurrentHydrogenSulfideConcentration_Final.Text, txtCurrentAmmoniaConcentration_Final.Text,
+                                    txtCurrentCleanWaterPercentage.Text, txtCurrentCostPerSecond.Text, txtGrams_CuS_Per_Second.Text, txtGrams_NH3_Per_Second.Text,
+                                    txtGrams_H2SO4_Per_Second.Text, txtNGSWAT_100.Text, txtNGSWAT_200.Text, txtNGSWAT_300.Text, txtNGSWAT_400.Text})
     End Sub
 
     Private Sub tmrSim_Tick(sender As Object, e As EventArgs) Handles tmrSim.Tick
@@ -96,6 +103,7 @@
         ' Clear calculated values
         initializeDisplayValues()
 
+        modSystemStatus.writeToLog({DateTime.Now.ToString(), "Start Command", txtAmmoniaConcentration_Initial.Text, txtHydrogenSulfideConcentration_Initial.Text, txtMaxPressure.Text, txtVolumetricFlowRate.Text, txtCost_Per_Gram_Copper_Sulfate.Text, txtCost_Per_Gram_Ammonia.Text, txtCost_Per_Gram_Sulfuric_Acid.Text, txtCost_Per_kWh.Text})
         statusMessage = MatLabHandle.Execute("simMain(" + txtVolumetricFlowRate.Text + "," + txtAmmoniaConcentration_Initial.Text + "," + txtHydrogenSulfideConcentration_Initial.Text + "," + txtMaxPressure.Text + "," + txtCost_Per_Gram_Copper_Sulfate.Text + "," + txtCost_Per_Gram_Ammonia.Text + "," + txtCost_Per_Gram_Sulfuric_Acid.Text + "," + txtCost_Per_kWh.Text + ")")
         parseStatusMessage(statusMessage)
 
@@ -116,6 +124,8 @@
         ' Disable 'Stop' command
         cmdStop.Enabled = False
 
+        ' Log the command
+        modSystemStatus.writeToLog({DateTime.Now.ToString(), "Stop Command"})
         'Set Pause option for next simulation
         cmdPause.Text = "Pause Simulation"
 
@@ -154,6 +164,8 @@
             ' Resume the timer
             tmrSim.Enabled = True
         ElseIf cmdPause.Text = "Pause Simulation" Then
+            ' Log the command
+            modSystemStatus.writeToLog({DateTime.Now.ToString(), "Pause Command"})
             ' Pause the timer
             tmrSim.Enabled = False
             ' Change button text
@@ -254,6 +266,7 @@
         initializeSegmentDisplayValues()
 
         ' Re-calculate Status from MATLAB
+        modSystemStatus.writeToLog({DateTime.Now.ToString(), "Resume Command", txtAmmoniaConcentration_Initial.Text, txtHydrogenSulfideConcentration_Initial.Text, txtMaxPressure.Text, txtVolumetricFlowRate.Text, txtCost_Per_Gram_Copper_Sulfate.Text, txtCost_Per_Gram_Ammonia.Text, txtCost_Per_Gram_Sulfuric_Acid.Text, txtCost_Per_kWh.Text})
         statusMessage = MatLabHandle.Execute("simMain(" + txtVolumetricFlowRate.Text + "," + txtAmmoniaConcentration_Initial.Text + "," + txtHydrogenSulfideConcentration_Initial.Text + "," + txtMaxPressure.Text + "," + txtCost_Per_Gram_Copper_Sulfate.Text + "," + txtCost_Per_Gram_Ammonia.Text + "," + txtCost_Per_Gram_Sulfuric_Acid.Text + "," + txtCost_Per_kWh.Text + ")")
         parseStatusMessage(statusMessage)
 
@@ -314,6 +327,17 @@
         total_CleanWater_Percentage = total_CleanWater_Percentage + CDbl(txtCurrentCleanWaterPercentage.Text)
         ' Update average clean water percentage yield
         txtAverageCleanWaterPercentage.Text = FormatNumber(total_CleanWater_Percentage / CDbl(txtSimTime.Text), 6)
+
+        modSystemStatus.writeToLog({DateTime.Now.ToString(), "Simulation Tick,", ",,,,,,", 'Skip the entries for the Start Command so the headers align
+                            ",,,,,,,,,,,,,,,", 'Skip the entries for the System Status message so the headers align
+                            txtSimTime.Text, txtSegmentTime.Text, Double.Parse(txtCurrentVolumeTreated.Text).ToString(), Double.Parse(txtCurrentCost.Text).ToString(),
+                            txtMaxHydrogenSulfideConcentration_Final.Text, txtMinHydrogenSulfideConcentration_Final.Text,
+                            txtMaxAmmoniaConcentration_Final.Text, txtMinAmmoniaConcentration_Final.Text,
+                            txtMaxCleanWaterPercentage.Text, txtMinCleanWaterPercentage.Text,
+                            Double.Parse(txtMaxCostPerLiter.Text).ToString(), Double.Parse(txtMinCostPerLiter.Text).ToString(),
+                            Double.Parse(txtTotalCost.Text).ToString(), Double.Parse(txtTotalVolumeTreated.Text).ToString(), Double.Parse(txtAverageCostPerLiter.Text).ToString(),
+                            txtAverageHydrogenSulfideConcentration_Final.Text, txtAverageAmmoniaConcentration_Final.Text,
+                            Double.Parse(txtAverageCleanWaterPercentage.Text).ToString()})
     End Sub
 
     Private Sub checkMinMaxValues()
@@ -363,5 +387,9 @@
 
     Private Sub CloseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CloseToolStripMenuItem.Click
         Application.Exit()
+    End Sub
+
+    Private Sub frmMain_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        modSystemStatus.logFile.Close()
     End Sub
 End Class
