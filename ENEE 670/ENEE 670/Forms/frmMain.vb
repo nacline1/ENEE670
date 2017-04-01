@@ -22,12 +22,10 @@
             ' Check for Initial Condition Text
             If line.Contains("Volumetric Flow Rate") Then
                 txtVolumetricFlowRate.Text = System.Text.RegularExpressions.Regex.Replace(line, "[^0-9.]", "")
-            ElseIf line.Contains("Hydrogen Sulfide Concentration") Then
-                txtHydrogenSulfideConcentration_Initial.Text = line.Split(":")(1).Trim()
-            ElseIf line.Contains("Ammonia Concentration") Then
-                txtAmmoniaConcentration_Initial.Text = line.Split(":")(1).Trim()
-            ElseIf line.Contains("Water Concentration (ppm)") Then
-                txtWaterConcentration.Text = line.Split(":")(1).Trim()
+            ElseIf line.Contains("Measured Hydrogen Sulfide Concentration") Then
+                txtMeasuredH2SConcentration.Text = line.Split(":")(1).Trim()
+            ElseIf line.Contains("Measured Ammonia Concentration") Then
+                txtMeasuredNH3Concentration.Text = line.Split(":")(1).Trim()
             ElseIf line.Contains("Max Applied Pressure") Then
                 txtMaxPressure.Text = line.Split(":")(1).Trim()
                 ' Check for Simulation Result Text
@@ -66,10 +64,10 @@
         ' Update current segment cost per liter
         txtCurrentCostPerLiter.Text = FormatNumber((CDbl(txtCurrentCostPerSecond.Text) / CDbl(txtVolumetricFlowRate.Text)), 4)
 
-        modSystemStatus.writeToLog({DateTime.Now.ToString(), "System Status Message,", ",,,,,,", 'Skip the entries for the Start Command so the headers align
-                                    txtVolumetricFlowRate.Text, txtHydrogenSulfideConcentration_Initial.Text, txtAmmoniaConcentration_Initial.Text,
-                                    txtWaterConcentration.Text, txtMaxPressure.Text, txtCurrentHydrogenSulfideConcentration_Final.Text, txtCurrentAmmoniaConcentration_Final.Text,
-                                    txtCurrentCleanWaterPercentage.Text, txtCurrentCostPerSecond.Text, txtGrams_CuS_Per_Second.Text, txtGrams_NH3_Per_Second.Text,
+        modSystemStatus.writeToLog({DateTime.Now.ToString(), "System Status Message,", ",,,,,,,", 'Skip the entries for the Start Command so the headers align
+                                    txtVolumetricFlowRate.Text, txtMeasuredH2SConcentration.Text, txtMeasuredNH3Concentration.Text,
+                                    txtMaxPressure.Text, txtCurrentHydrogenSulfideConcentration_Final.Text, txtCurrentAmmoniaConcentration_Final.Text,
+                                    txtCurrentCleanWaterPercentage.Text, Double.Parse(txtCurrentCostPerSecond.Text).ToString(), txtGrams_CuS_Per_Second.Text, txtGrams_NH3_Per_Second.Text,
                                     txtGrams_H2SO4_Per_Second.Text, txtNGSWAT_100.Text, txtNGSWAT_200.Text, txtNGSWAT_300.Text, txtNGSWAT_400.Text})
     End Sub
 
@@ -78,6 +76,10 @@
         txtSimTime.Text = CDbl(txtSimTime.Text) + 1
         ' Increment the segment time counter
         txtSegmentTime.Text = CDbl(txtSegmentTime.Text) + 1
+
+        Dim statusMessage As String
+        statusMessage = MatLabHandle.Execute("simMain(" + txtVolumetricFlowRate.Text + "," + txtAmmoniaConcentration_Initial.Text + "," + txtHydrogenSulfideConcentration_Initial.Text + "," + txtMaxPressure.Text + "," + txtCost_Per_Gram_Copper_Sulfate.Text + "," + txtCost_Per_Gram_Ammonia.Text + "," + txtCost_Per_Gram_Sulfuric_Acid.Text + "," + txtCost_Per_kWh.Text + "," + txtNumAnalyzers.Text + ")")
+        parseStatusMessage(statusMessage)
 
         ' Update count for current volume treated for this segment
         txtCurrentVolumeTreated.Text = FormatNumber(CDbl(txtCurrentVolumeTreated.Text) + CDbl(txtVolumetricFlowRate.Text), 0)
@@ -103,9 +105,7 @@
         ' Clear calculated values
         initializeDisplayValues()
 
-        modSystemStatus.writeToLog({DateTime.Now.ToString(), "Start Command", txtAmmoniaConcentration_Initial.Text, txtHydrogenSulfideConcentration_Initial.Text, txtMaxPressure.Text, txtVolumetricFlowRate.Text, txtCost_Per_Gram_Copper_Sulfate.Text, txtCost_Per_Gram_Ammonia.Text, txtCost_Per_Gram_Sulfuric_Acid.Text, txtCost_Per_kWh.Text})
-        statusMessage = MatLabHandle.Execute("simMain(" + txtVolumetricFlowRate.Text + "," + txtAmmoniaConcentration_Initial.Text + "," + txtHydrogenSulfideConcentration_Initial.Text + "," + txtMaxPressure.Text + "," + txtCost_Per_Gram_Copper_Sulfate.Text + "," + txtCost_Per_Gram_Ammonia.Text + "," + txtCost_Per_Gram_Sulfuric_Acid.Text + "," + txtCost_Per_kWh.Text + ")")
-        parseStatusMessage(statusMessage)
+        modSystemStatus.writeToLog({DateTime.Now.ToString(), "Start Command", txtAmmoniaConcentration_Initial.Text, txtHydrogenSulfideConcentration_Initial.Text, txtMaxPressure.Text, txtVolumetricFlowRate.Text, txtCost_Per_Gram_Copper_Sulfate.Text, txtCost_Per_Gram_Ammonia.Text, txtCost_Per_Gram_Sulfuric_Acid.Text, txtCost_Per_kWh.Text, txtNumAnalyzers.Text})
 
         ' Set simulation timer based on user input
         tmrSim.Interval = CInt(txtTimePerStep.Text)
@@ -138,6 +138,7 @@
         txtCost_Per_Gram_Ammonia.Enabled = True
         txtCost_Per_Gram_Sulfuric_Acid.Enabled = True
         txtCost_Per_kWh.Enabled = True
+        txtNumAnalyzers.Enabled = True
 
         simulationStarted = False
     End Sub
@@ -231,7 +232,6 @@
     Private Sub disableInitialConditionFields()
         txtHydrogenSulfideConcentration_Initial.Enabled = False
         txtAmmoniaConcentration_Initial.Enabled = False
-        txtWaterConcentration.Enabled = False
         txtTimePerStep.Enabled = False
         txtMaxPressure.Enabled = False
         txtVolumetricFlowRate.Enabled = False
@@ -239,26 +239,16 @@
         txtCost_Per_Gram_Ammonia.Enabled = False
         txtCost_Per_Gram_Sulfuric_Acid.Enabled = False
         txtCost_Per_kWh.Enabled = False
+        txtNumAnalyzers.Enabled = False
     End Sub
 
     Private Sub enableInitialConditionFields()
         txtHydrogenSulfideConcentration_Initial.Enabled = True
         txtAmmoniaConcentration_Initial.Enabled = True
-        txtWaterConcentration.Enabled = True
         txtTimePerStep.Enabled = True
-
-        ' NOTE: Once simulation has started, do NOT let user change Cost per Gram, Max Pressure, or Volumetric Flow Rate
-        'txtMaxPressure.Enabled = True
-        'txtVolumetricFlowRate.Enabled = True
-        'txtCost_Per_Gram_Copper_Sulfate.Enabled = True
-        'txtCost_Per_Gram_Ammonia.Enabled = True
-        'txtCost_Per_Gram_Sulfuric_Acid.Enabled = True
-        'txtCost_Per_kWh.Enabled = True
     End Sub
 
     Private Sub handleNewSegment()
-        Dim statusMessage As String
-
         ' Increment segment counter
         txtCurrentSegment.Text = CInt(txtCurrentSegment.Text) + 1
 
@@ -266,10 +256,7 @@
         initializeSegmentDisplayValues()
 
         ' Re-calculate Status from MATLAB
-        modSystemStatus.writeToLog({DateTime.Now.ToString(), "Resume Command", txtAmmoniaConcentration_Initial.Text, txtHydrogenSulfideConcentration_Initial.Text, txtMaxPressure.Text, txtVolumetricFlowRate.Text, txtCost_Per_Gram_Copper_Sulfate.Text, txtCost_Per_Gram_Ammonia.Text, txtCost_Per_Gram_Sulfuric_Acid.Text, txtCost_Per_kWh.Text})
-        statusMessage = MatLabHandle.Execute("simMain(" + txtVolumetricFlowRate.Text + "," + txtAmmoniaConcentration_Initial.Text + "," + txtHydrogenSulfideConcentration_Initial.Text + "," + txtMaxPressure.Text + "," + txtCost_Per_Gram_Copper_Sulfate.Text + "," + txtCost_Per_Gram_Ammonia.Text + "," + txtCost_Per_Gram_Sulfuric_Acid.Text + "," + txtCost_Per_kWh.Text + ")")
-        parseStatusMessage(statusMessage)
-
+        modSystemStatus.writeToLog({DateTime.Now.ToString(), "Resume Command", txtAmmoniaConcentration_Initial.Text, txtHydrogenSulfideConcentration_Initial.Text, txtMaxPressure.Text, txtVolumetricFlowRate.Text, txtCost_Per_Gram_Copper_Sulfate.Text, txtCost_Per_Gram_Ammonia.Text, txtCost_Per_Gram_Sulfuric_Acid.Text, txtCost_Per_kWh.Text, txtNumAnalyzers.Text})
     End Sub
 
     Private Sub cost_Parameter_TextChanged(sender As Object, e As EventArgs) Handles txtCost_Per_Gram_Copper_Sulfate.TextChanged, txtCost_Per_Gram_Ammonia.TextChanged, txtCost_Per_Gram_Sulfuric_Acid.TextChanged, txtCost_Per_kWh.TextChanged
@@ -280,7 +267,7 @@
     End Sub
 
 
-    Private Sub initial_Parameter_TextChanged(sender As Object, e As EventArgs) Handles txtHydrogenSulfideConcentration_Initial.TextChanged, txtAmmoniaConcentration_Initial.TextChanged, txtWaterConcentration.TextChanged, txtMaxPressure.TextChanged, txtVolumetricFlowRate.TextChanged
+    Private Sub initial_Parameter_TextChanged(sender As Object, e As EventArgs) Handles txtHydrogenSulfideConcentration_Initial.TextChanged, txtAmmoniaConcentration_Initial.TextChanged, txtMaxPressure.TextChanged, txtVolumetricFlowRate.TextChanged
         ' Ignore setting flag if parameters are changed without simulation running
         If simulationStarted Then
             bInitialParameterChanged = True
@@ -328,8 +315,8 @@
         ' Update average clean water percentage yield
         txtAverageCleanWaterPercentage.Text = FormatNumber(total_CleanWater_Percentage / CDbl(txtSimTime.Text), 6)
 
-        modSystemStatus.writeToLog({DateTime.Now.ToString(), "Simulation Tick,", ",,,,,,", 'Skip the entries for the Start Command so the headers align
-                            ",,,,,,,,,,,,,,,", 'Skip the entries for the System Status message so the headers align
+        modSystemStatus.writeToLog({DateTime.Now.ToString(), "Simulation Tick,", ",,,,,,,", 'Skip the entries for the Start Command so the headers align
+                            ",,,,,,,,,,,,,,", 'Skip the entries for the System Status message so the headers align
                             txtSimTime.Text, txtSegmentTime.Text, Double.Parse(txtCurrentVolumeTreated.Text).ToString(), Double.Parse(txtCurrentCost.Text).ToString(),
                             txtMaxHydrogenSulfideConcentration_Final.Text, txtMinHydrogenSulfideConcentration_Final.Text,
                             txtMaxAmmoniaConcentration_Final.Text, txtMinAmmoniaConcentration_Final.Text,

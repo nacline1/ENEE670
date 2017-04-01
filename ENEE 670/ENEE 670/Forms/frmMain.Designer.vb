@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmMain
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,19 +20,18 @@ Partial Class frmMain
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.Label6 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.cmdStart = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.txtNumAnalyzers = New System.Windows.Forms.TextBox()
         Me.txtTimePerStep = New System.Windows.Forms.TextBox()
         Me.Label30 = New System.Windows.Forms.Label()
-        Me.txtWaterConcentration = New System.Windows.Forms.TextBox()
         Me.txtCost_Per_kWh = New System.Windows.Forms.TextBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.txtCost_Per_Gram_Sulfuric_Acid = New System.Windows.Forms.TextBox()
@@ -83,6 +82,20 @@ Partial Class frmMain
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.txtGrams_CuS_Per_Second = New System.Windows.Forms.Label()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.GroupBox7 = New System.Windows.Forms.GroupBox()
+        Me.Label29 = New System.Windows.Forms.Label()
+        Me.txtCurrentHydrogenSulfideConcentration_Final = New System.Windows.Forms.Label()
+        Me.txtCurrentCleanWaterPercentage = New System.Windows.Forms.Label()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.txtCurrentAmmoniaConcentration_Final = New System.Windows.Forms.Label()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.Label41 = New System.Windows.Forms.Label()
+        Me.Label40 = New System.Windows.Forms.Label()
+        Me.txtMeasuredNH3Concentration = New System.Windows.Forms.Label()
+        Me.txtMeasuredH2SConcentration = New System.Windows.Forms.Label()
         Me.txtSegmentTime = New System.Windows.Forms.Label()
         Me.Label35 = New System.Windows.Forms.Label()
         Me.txtCurrentSegment = New System.Windows.Forms.Label()
@@ -93,21 +106,11 @@ Partial Class frmMain
         Me.Label31 = New System.Windows.Forms.Label()
         Me.Label28 = New System.Windows.Forms.Label()
         Me.txtCurrentVolumeTreated = New System.Windows.Forms.Label()
-        Me.GroupBox7 = New System.Windows.Forms.GroupBox()
-        Me.Label29 = New System.Windows.Forms.Label()
-        Me.txtCurrentHydrogenSulfideConcentration_Final = New System.Windows.Forms.Label()
-        Me.txtCurrentCleanWaterPercentage = New System.Windows.Forms.Label()
-        Me.Label26 = New System.Windows.Forms.Label()
-        Me.txtCurrentAmmoniaConcentration_Final = New System.Windows.Forms.Label()
-        Me.Label27 = New System.Windows.Forms.Label()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.txtGrams_NH3_Per_Second = New System.Windows.Forms.Label()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.txtGrams_H2SO4_Per_Second = New System.Windows.Forms.Label()
-        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
-        Me.txtGrams_CuS_Per_Second = New System.Windows.Forms.Label()
-        Me.Label21 = New System.Windows.Forms.Label()
         Me.txtSimTime = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.tmrSim = New System.Windows.Forms.Timer(Me.components)
@@ -118,19 +121,20 @@ Partial Class frmMain
         Me.CloseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Label38 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
+        Me.GroupBox5.SuspendLayout()
         Me.GroupBox7.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
-        Me.GroupBox5.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label2
         '
-        Me.Label2.Location = New System.Drawing.Point(499, 55)
+        Me.Label2.Location = New System.Drawing.Point(378, 55)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(116, 33)
         Me.Label2.TabIndex = 1
@@ -155,18 +159,9 @@ Partial Class frmMain
         Me.Label4.Text = "Ammonia Concentration (ppm)"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'Label6
-        '
-        Me.Label6.Location = New System.Drawing.Point(253, 55)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(116, 33)
-        Me.Label6.TabIndex = 7
-        Me.Label6.Text = "Water Concentration (ppm)"
-        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
         'Label8
         '
-        Me.Label8.Location = New System.Drawing.Point(375, 55)
+        Me.Label8.Location = New System.Drawing.Point(254, 55)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(116, 33)
         Me.Label8.TabIndex = 9
@@ -175,7 +170,7 @@ Partial Class frmMain
         '
         'cmdStart
         '
-        Me.cmdStart.Location = New System.Drawing.Point(658, 41)
+        Me.cmdStart.Location = New System.Drawing.Point(684, 41)
         Me.cmdStart.Name = "cmdStart"
         Me.cmdStart.Size = New System.Drawing.Size(117, 23)
         Me.cmdStart.TabIndex = 10
@@ -184,9 +179,10 @@ Partial Class frmMain
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.Label38)
+        Me.GroupBox1.Controls.Add(Me.txtNumAnalyzers)
         Me.GroupBox1.Controls.Add(Me.txtTimePerStep)
         Me.GroupBox1.Controls.Add(Me.Label30)
-        Me.GroupBox1.Controls.Add(Me.txtWaterConcentration)
         Me.GroupBox1.Controls.Add(Me.txtCost_Per_kWh)
         Me.GroupBox1.Controls.Add(Me.Label19)
         Me.GroupBox1.Controls.Add(Me.txtCost_Per_Gram_Sulfuric_Acid)
@@ -202,14 +198,22 @@ Partial Class frmMain
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.Label8)
         Me.GroupBox1.Controls.Add(Me.Label1)
-        Me.GroupBox1.Controls.Add(Me.Label6)
         Me.GroupBox1.Controls.Add(Me.Label4)
         Me.GroupBox1.Location = New System.Drawing.Point(22, 30)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(625, 195)
+        Me.GroupBox1.Size = New System.Drawing.Size(625, 171)
         Me.GroupBox1.TabIndex = 11
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Initial Conditions"
+        '
+        'txtNumAnalyzers
+        '
+        Me.txtNumAnalyzers.Location = New System.Drawing.Point(503, 32)
+        Me.txtNumAnalyzers.Name = "txtNumAnalyzers"
+        Me.txtNumAnalyzers.Size = New System.Drawing.Size(116, 20)
+        Me.txtNumAnalyzers.TabIndex = 28
+        Me.txtNumAnalyzers.Text = "1"
+        Me.txtNumAnalyzers.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'txtTimePerStep
         '
@@ -228,16 +232,6 @@ Partial Class frmMain
         Me.Label30.TabIndex = 26
         Me.Label30.Text = "Time Per Step (ms)"
         Me.Label30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'txtWaterConcentration
-        '
-        Me.txtWaterConcentration.BackColor = System.Drawing.SystemColors.Control
-        Me.txtWaterConcentration.Location = New System.Drawing.Point(253, 33)
-        Me.txtWaterConcentration.Name = "txtWaterConcentration"
-        Me.txtWaterConcentration.ReadOnly = True
-        Me.txtWaterConcentration.Size = New System.Drawing.Size(116, 20)
-        Me.txtWaterConcentration.TabIndex = 25
-        Me.txtWaterConcentration.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'txtCost_Per_kWh
         '
@@ -313,7 +307,7 @@ Partial Class frmMain
         '
         'txtVolumetricFlowRate
         '
-        Me.txtVolumetricFlowRate.Location = New System.Drawing.Point(499, 32)
+        Me.txtVolumetricFlowRate.Location = New System.Drawing.Point(378, 32)
         Me.txtVolumetricFlowRate.Name = "txtVolumetricFlowRate"
         Me.txtVolumetricFlowRate.Size = New System.Drawing.Size(116, 20)
         Me.txtVolumetricFlowRate.TabIndex = 16
@@ -322,7 +316,7 @@ Partial Class frmMain
         '
         'txtMaxPressure
         '
-        Me.txtMaxPressure.Location = New System.Drawing.Point(375, 32)
+        Me.txtMaxPressure.Location = New System.Drawing.Point(254, 32)
         Me.txtMaxPressure.Name = "txtMaxPressure"
         Me.txtMaxPressure.Size = New System.Drawing.Size(116, 20)
         Me.txtMaxPressure.TabIndex = 15
@@ -373,9 +367,9 @@ Partial Class frmMain
         Me.GroupBox2.Controls.Add(Me.txtAverageAmmoniaConcentration_Final)
         Me.GroupBox2.Controls.Add(Me.Label15)
         Me.GroupBox2.Controls.Add(Me.txtTotalVolumeTreated)
-        Me.GroupBox2.Location = New System.Drawing.Point(27, 447)
+        Me.GroupBox2.Location = New System.Drawing.Point(27, 424)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(745, 177)
+        Me.GroupBox2.Size = New System.Drawing.Size(800, 177)
         Me.GroupBox2.TabIndex = 12
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Simulation Results"
@@ -624,7 +618,7 @@ Partial Class frmMain
         Me.GroupBox3.Controls.Add(Me.Label16)
         Me.GroupBox3.Controls.Add(Me.Label17)
         Me.GroupBox3.Controls.Add(Me.Label20)
-        Me.GroupBox3.Location = New System.Drawing.Point(27, 636)
+        Me.GroupBox3.Location = New System.Drawing.Point(27, 613)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.Size = New System.Drawing.Size(568, 71)
         Me.GroupBox3.TabIndex = 13
@@ -714,6 +708,13 @@ Partial Class frmMain
         '
         'GroupBox4
         '
+        Me.GroupBox4.Controls.Add(Me.GroupBox5)
+        Me.GroupBox4.Controls.Add(Me.GroupBox7)
+        Me.GroupBox4.Controls.Add(Me.Label3)
+        Me.GroupBox4.Controls.Add(Me.Label41)
+        Me.GroupBox4.Controls.Add(Me.Label40)
+        Me.GroupBox4.Controls.Add(Me.txtMeasuredNH3Concentration)
+        Me.GroupBox4.Controls.Add(Me.txtMeasuredH2SConcentration)
         Me.GroupBox4.Controls.Add(Me.txtSegmentTime)
         Me.GroupBox4.Controls.Add(Me.Label35)
         Me.GroupBox4.Controls.Add(Me.txtCurrentSegment)
@@ -724,17 +725,148 @@ Partial Class frmMain
         Me.GroupBox4.Controls.Add(Me.Label31)
         Me.GroupBox4.Controls.Add(Me.Label28)
         Me.GroupBox4.Controls.Add(Me.txtCurrentVolumeTreated)
-        Me.GroupBox4.Controls.Add(Me.GroupBox7)
         Me.GroupBox4.Controls.Add(Me.txtCurrentCostPerSecond)
         Me.GroupBox4.Controls.Add(Me.GroupBox6)
-        Me.GroupBox4.Controls.Add(Me.GroupBox5)
-        Me.GroupBox4.Controls.Add(Me.Label3)
-        Me.GroupBox4.Location = New System.Drawing.Point(27, 233)
+        Me.GroupBox4.Location = New System.Drawing.Point(27, 210)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(745, 201)
+        Me.GroupBox4.Size = New System.Drawing.Size(800, 201)
         Me.GroupBox4.TabIndex = 13
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Simulation Segment Status"
+        '
+        'GroupBox5
+        '
+        Me.GroupBox5.Controls.Add(Me.txtGrams_CuS_Per_Second)
+        Me.GroupBox5.Controls.Add(Me.Label21)
+        Me.GroupBox5.Location = New System.Drawing.Point(382, 19)
+        Me.GroupBox5.Name = "GroupBox5"
+        Me.GroupBox5.Size = New System.Drawing.Size(143, 74)
+        Me.GroupBox5.TabIndex = 8
+        Me.GroupBox5.TabStop = False
+        Me.GroupBox5.Text = "Stage 1"
+        '
+        'txtGrams_CuS_Per_Second
+        '
+        Me.txtGrams_CuS_Per_Second.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.txtGrams_CuS_Per_Second.Location = New System.Drawing.Point(15, 18)
+        Me.txtGrams_CuS_Per_Second.Name = "txtGrams_CuS_Per_Second"
+        Me.txtGrams_CuS_Per_Second.Size = New System.Drawing.Size(116, 20)
+        Me.txtGrams_CuS_Per_Second.TabIndex = 2
+        Me.txtGrams_CuS_Per_Second.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label21
+        '
+        Me.Label21.Location = New System.Drawing.Point(15, 42)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(116, 23)
+        Me.Label21.TabIndex = 3
+        Me.Label21.Text = "Grams of CuS / s"
+        Me.Label21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'GroupBox7
+        '
+        Me.GroupBox7.Controls.Add(Me.Label29)
+        Me.GroupBox7.Controls.Add(Me.txtCurrentHydrogenSulfideConcentration_Final)
+        Me.GroupBox7.Controls.Add(Me.txtCurrentCleanWaterPercentage)
+        Me.GroupBox7.Controls.Add(Me.Label26)
+        Me.GroupBox7.Controls.Add(Me.txtCurrentAmmoniaConcentration_Final)
+        Me.GroupBox7.Controls.Add(Me.Label27)
+        Me.GroupBox7.Location = New System.Drawing.Point(382, 99)
+        Me.GroupBox7.Name = "GroupBox7"
+        Me.GroupBox7.Size = New System.Drawing.Size(403, 83)
+        Me.GroupBox7.TabIndex = 10
+        Me.GroupBox7.TabStop = False
+        Me.GroupBox7.Text = "Stage 3"
+        '
+        'Label29
+        '
+        Me.Label29.Location = New System.Drawing.Point(278, 41)
+        Me.Label29.Name = "Label29"
+        Me.Label29.Size = New System.Drawing.Size(116, 30)
+        Me.Label29.TabIndex = 13
+        Me.Label29.Text = "Segment Clean Water Percentage"
+        Me.Label29.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'txtCurrentHydrogenSulfideConcentration_Final
+        '
+        Me.txtCurrentHydrogenSulfideConcentration_Final.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.txtCurrentHydrogenSulfideConcentration_Final.Location = New System.Drawing.Point(15, 16)
+        Me.txtCurrentHydrogenSulfideConcentration_Final.Name = "txtCurrentHydrogenSulfideConcentration_Final"
+        Me.txtCurrentHydrogenSulfideConcentration_Final.Size = New System.Drawing.Size(116, 20)
+        Me.txtCurrentHydrogenSulfideConcentration_Final.TabIndex = 4
+        Me.txtCurrentHydrogenSulfideConcentration_Final.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'txtCurrentCleanWaterPercentage
+        '
+        Me.txtCurrentCleanWaterPercentage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.txtCurrentCleanWaterPercentage.Location = New System.Drawing.Point(278, 16)
+        Me.txtCurrentCleanWaterPercentage.Name = "txtCurrentCleanWaterPercentage"
+        Me.txtCurrentCleanWaterPercentage.Size = New System.Drawing.Size(116, 20)
+        Me.txtCurrentCleanWaterPercentage.TabIndex = 12
+        Me.txtCurrentCleanWaterPercentage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label26
+        '
+        Me.Label26.Location = New System.Drawing.Point(156, 40)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(116, 30)
+        Me.Label26.TabIndex = 7
+        Me.Label26.Text = "Segment Ammonia Concentration (ppm)"
+        Me.Label26.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'txtCurrentAmmoniaConcentration_Final
+        '
+        Me.txtCurrentAmmoniaConcentration_Final.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.txtCurrentAmmoniaConcentration_Final.Location = New System.Drawing.Point(156, 16)
+        Me.txtCurrentAmmoniaConcentration_Final.Name = "txtCurrentAmmoniaConcentration_Final"
+        Me.txtCurrentAmmoniaConcentration_Final.Size = New System.Drawing.Size(116, 20)
+        Me.txtCurrentAmmoniaConcentration_Final.TabIndex = 6
+        Me.txtCurrentAmmoniaConcentration_Final.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label27
+        '
+        Me.Label27.Location = New System.Drawing.Point(15, 40)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(116, 34)
+        Me.Label27.TabIndex = 5
+        Me.Label27.Text = "Segment Hydrogen Sulfide Concentration (ppm)"
+        Me.Label27.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label41
+        '
+        Me.Label41.Location = New System.Drawing.Point(249, 110)
+        Me.Label41.Name = "Label41"
+        Me.Label41.Size = New System.Drawing.Size(142, 30)
+        Me.Label41.TabIndex = 25
+        Me.Label41.Text = "Measured NH3 Concentration"
+        Me.Label41.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label40
+        '
+        Me.Label40.Location = New System.Drawing.Point(248, 48)
+        Me.Label40.Name = "Label40"
+        Me.Label40.Size = New System.Drawing.Size(142, 30)
+        Me.Label40.TabIndex = 24
+        Me.Label40.Text = "Measured H2S Concentration"
+        Me.Label40.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'txtMeasuredNH3Concentration
+        '
+        Me.txtMeasuredNH3Concentration.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.txtMeasuredNH3Concentration.Location = New System.Drawing.Point(263, 87)
+        Me.txtMeasuredNH3Concentration.Name = "txtMeasuredNH3Concentration"
+        Me.txtMeasuredNH3Concentration.Size = New System.Drawing.Size(116, 20)
+        Me.txtMeasuredNH3Concentration.TabIndex = 23
+        Me.txtMeasuredNH3Concentration.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'txtMeasuredH2SConcentration
+        '
+        Me.txtMeasuredH2SConcentration.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.txtMeasuredH2SConcentration.Location = New System.Drawing.Point(263, 25)
+        Me.txtMeasuredH2SConcentration.Name = "txtMeasuredH2SConcentration"
+        Me.txtMeasuredH2SConcentration.Size = New System.Drawing.Size(116, 20)
+        Me.txtMeasuredH2SConcentration.TabIndex = 22
+        Me.txtMeasuredH2SConcentration.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'txtSegmentTime
         '
@@ -827,82 +959,13 @@ Partial Class frmMain
         Me.txtCurrentVolumeTreated.TabIndex = 12
         Me.txtCurrentVolumeTreated.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'GroupBox7
-        '
-        Me.GroupBox7.Controls.Add(Me.Label29)
-        Me.GroupBox7.Controls.Add(Me.txtCurrentHydrogenSulfideConcentration_Final)
-        Me.GroupBox7.Controls.Add(Me.txtCurrentCleanWaterPercentage)
-        Me.GroupBox7.Controls.Add(Me.Label26)
-        Me.GroupBox7.Controls.Add(Me.txtCurrentAmmoniaConcentration_Final)
-        Me.GroupBox7.Controls.Add(Me.Label27)
-        Me.GroupBox7.Location = New System.Drawing.Point(311, 99)
-        Me.GroupBox7.Name = "GroupBox7"
-        Me.GroupBox7.Size = New System.Drawing.Size(403, 83)
-        Me.GroupBox7.TabIndex = 10
-        Me.GroupBox7.TabStop = False
-        Me.GroupBox7.Text = "Stage 3"
-        '
-        'Label29
-        '
-        Me.Label29.Location = New System.Drawing.Point(278, 41)
-        Me.Label29.Name = "Label29"
-        Me.Label29.Size = New System.Drawing.Size(116, 30)
-        Me.Label29.TabIndex = 13
-        Me.Label29.Text = "Segment Clean Water Percentage"
-        Me.Label29.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'txtCurrentHydrogenSulfideConcentration_Final
-        '
-        Me.txtCurrentHydrogenSulfideConcentration_Final.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.txtCurrentHydrogenSulfideConcentration_Final.Location = New System.Drawing.Point(15, 16)
-        Me.txtCurrentHydrogenSulfideConcentration_Final.Name = "txtCurrentHydrogenSulfideConcentration_Final"
-        Me.txtCurrentHydrogenSulfideConcentration_Final.Size = New System.Drawing.Size(116, 20)
-        Me.txtCurrentHydrogenSulfideConcentration_Final.TabIndex = 4
-        Me.txtCurrentHydrogenSulfideConcentration_Final.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'txtCurrentCleanWaterPercentage
-        '
-        Me.txtCurrentCleanWaterPercentage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.txtCurrentCleanWaterPercentage.Location = New System.Drawing.Point(278, 16)
-        Me.txtCurrentCleanWaterPercentage.Name = "txtCurrentCleanWaterPercentage"
-        Me.txtCurrentCleanWaterPercentage.Size = New System.Drawing.Size(116, 20)
-        Me.txtCurrentCleanWaterPercentage.TabIndex = 12
-        Me.txtCurrentCleanWaterPercentage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label26
-        '
-        Me.Label26.Location = New System.Drawing.Point(156, 40)
-        Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(116, 30)
-        Me.Label26.TabIndex = 7
-        Me.Label26.Text = "Segment Ammonia Concentration (ppm)"
-        Me.Label26.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'txtCurrentAmmoniaConcentration_Final
-        '
-        Me.txtCurrentAmmoniaConcentration_Final.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.txtCurrentAmmoniaConcentration_Final.Location = New System.Drawing.Point(156, 16)
-        Me.txtCurrentAmmoniaConcentration_Final.Name = "txtCurrentAmmoniaConcentration_Final"
-        Me.txtCurrentAmmoniaConcentration_Final.Size = New System.Drawing.Size(116, 20)
-        Me.txtCurrentAmmoniaConcentration_Final.TabIndex = 6
-        Me.txtCurrentAmmoniaConcentration_Final.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label27
-        '
-        Me.Label27.Location = New System.Drawing.Point(15, 40)
-        Me.Label27.Name = "Label27"
-        Me.Label27.Size = New System.Drawing.Size(116, 34)
-        Me.Label27.TabIndex = 5
-        Me.Label27.Text = "Segment Hydrogen Sulfide Concentration (ppm)"
-        Me.Label27.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
         'GroupBox6
         '
         Me.GroupBox6.Controls.Add(Me.txtGrams_NH3_Per_Second)
         Me.GroupBox6.Controls.Add(Me.Label22)
         Me.GroupBox6.Controls.Add(Me.Label25)
         Me.GroupBox6.Controls.Add(Me.txtGrams_H2SO4_Per_Second)
-        Me.GroupBox6.Location = New System.Drawing.Point(460, 19)
+        Me.GroupBox6.Location = New System.Drawing.Point(531, 19)
         Me.GroupBox6.Name = "GroupBox6"
         Me.GroupBox6.Size = New System.Drawing.Size(254, 74)
         Me.GroupBox6.TabIndex = 9
@@ -945,39 +1008,10 @@ Partial Class frmMain
         Me.txtGrams_H2SO4_Per_Second.TabIndex = 6
         Me.txtGrams_H2SO4_Per_Second.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'GroupBox5
-        '
-        Me.GroupBox5.Controls.Add(Me.txtGrams_CuS_Per_Second)
-        Me.GroupBox5.Controls.Add(Me.Label21)
-        Me.GroupBox5.Location = New System.Drawing.Point(311, 19)
-        Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Size = New System.Drawing.Size(143, 74)
-        Me.GroupBox5.TabIndex = 8
-        Me.GroupBox5.TabStop = False
-        Me.GroupBox5.Text = "Stage 1"
-        '
-        'txtGrams_CuS_Per_Second
-        '
-        Me.txtGrams_CuS_Per_Second.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.txtGrams_CuS_Per_Second.Location = New System.Drawing.Point(15, 18)
-        Me.txtGrams_CuS_Per_Second.Name = "txtGrams_CuS_Per_Second"
-        Me.txtGrams_CuS_Per_Second.Size = New System.Drawing.Size(116, 20)
-        Me.txtGrams_CuS_Per_Second.TabIndex = 2
-        Me.txtGrams_CuS_Per_Second.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label21
-        '
-        Me.Label21.Location = New System.Drawing.Point(15, 42)
-        Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(116, 23)
-        Me.Label21.TabIndex = 3
-        Me.Label21.Text = "Grams of CuS / s"
-        Me.Label21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
         'txtSimTime
         '
         Me.txtSimTime.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.txtSimTime.Location = New System.Drawing.Point(659, 181)
+        Me.txtSimTime.Location = New System.Drawing.Point(685, 140)
         Me.txtSimTime.Name = "txtSimTime"
         Me.txtSimTime.Size = New System.Drawing.Size(116, 20)
         Me.txtSimTime.TabIndex = 10
@@ -985,7 +1019,7 @@ Partial Class frmMain
         '
         'Label13
         '
-        Me.Label13.Location = New System.Drawing.Point(659, 205)
+        Me.Label13.Location = New System.Drawing.Point(685, 164)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(116, 23)
         Me.Label13.TabIndex = 11
@@ -999,7 +1033,7 @@ Partial Class frmMain
         'cmdStop
         '
         Me.cmdStop.Enabled = False
-        Me.cmdStop.Location = New System.Drawing.Point(658, 137)
+        Me.cmdStop.Location = New System.Drawing.Point(684, 108)
         Me.cmdStop.Name = "cmdStop"
         Me.cmdStop.Size = New System.Drawing.Size(117, 23)
         Me.cmdStop.TabIndex = 14
@@ -1009,7 +1043,7 @@ Partial Class frmMain
         'cmdPause
         '
         Me.cmdPause.Enabled = False
-        Me.cmdPause.Location = New System.Drawing.Point(658, 89)
+        Me.cmdPause.Location = New System.Drawing.Point(684, 75)
         Me.cmdPause.Name = "cmdPause"
         Me.cmdPause.Size = New System.Drawing.Size(117, 23)
         Me.cmdPause.TabIndex = 15
@@ -1021,7 +1055,7 @@ Partial Class frmMain
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.HelpToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(788, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(839, 24)
         Me.MenuStrip1.TabIndex = 16
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -1051,11 +1085,20 @@ Partial Class frmMain
         Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
         Me.AboutToolStripMenuItem.Text = "About"
         '
+        'Label38
+        '
+        Me.Label38.Location = New System.Drawing.Point(503, 55)
+        Me.Label38.Name = "Label38"
+        Me.Label38.Size = New System.Drawing.Size(116, 21)
+        Me.Label38.TabIndex = 29
+        Me.Label38.Text = "# Chemical Analyzers"
+        Me.Label38.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(788, 738)
+        Me.ClientSize = New System.Drawing.Size(839, 703)
         Me.Controls.Add(Me.cmdPause)
         Me.Controls.Add(Me.cmdStop)
         Me.Controls.Add(Me.GroupBox4)
@@ -1075,9 +1118,9 @@ Partial Class frmMain
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox4.ResumeLayout(False)
+        Me.GroupBox5.ResumeLayout(False)
         Me.GroupBox7.ResumeLayout(False)
         Me.GroupBox6.ResumeLayout(False)
-        Me.GroupBox5.ResumeLayout(False)
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.ResumeLayout(False)
@@ -1087,7 +1130,6 @@ Partial Class frmMain
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents Label8 As System.Windows.Forms.Label
     Friend WithEvents cmdStart As System.Windows.Forms.Button
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
@@ -1151,7 +1193,6 @@ Partial Class frmMain
     Friend WithEvents txtAverageCostPerLiter As System.Windows.Forms.Label
     Friend WithEvents Label28 As System.Windows.Forms.Label
     Friend WithEvents txtCurrentVolumeTreated As System.Windows.Forms.Label
-    Friend WithEvents txtWaterConcentration As System.Windows.Forms.TextBox
     Friend WithEvents txtCurrentCost As System.Windows.Forms.Label
     Friend WithEvents Label31 As System.Windows.Forms.Label
     Friend WithEvents txtCurrentCostPerLiter As System.Windows.Forms.Label
@@ -1179,5 +1220,10 @@ Partial Class frmMain
     Friend WithEvents Label36 As System.Windows.Forms.Label
     Friend WithEvents Label33 As System.Windows.Forms.Label
     Public WithEvents Line2 As System.Windows.Forms.Label
-
+    Friend WithEvents Label41 As Label
+    Friend WithEvents Label40 As Label
+    Friend WithEvents txtMeasuredNH3Concentration As Label
+    Friend WithEvents txtMeasuredH2SConcentration As Label
+    Friend WithEvents txtNumAnalyzers As TextBox
+    Friend WithEvents Label38 As Label
 End Class
