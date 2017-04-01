@@ -1,11 +1,15 @@
-function statusMessage = simMain(user_VolumetricFlowRate, user_ConcentrationAmmoniaInitial, user_ConcentrationHydrogenSulfide, user_MaxAppliedPressure, user_CpG_CuS, user_CpG_NH3, user_CpG_H2SO4, user_CpKwH)
+function statusMessage = simMain(user_VolumetricFlowRate, user_ConcentrationAmmoniaInitial, user_ConcentrationHydrogenSulfide, user_MaxAppliedPressure, user_CpG_CuS, user_CpG_NH3, user_CpG_H2SO4, user_CpKwH, user_numChemicalAnalyzers)
 
     debug = true; % Flag for additional print statements
 
     %%%%%%%%%%%%%%%%%%% SIMULATION USER VARIABLES %%%%%%%%%%%%%%%%%%%%%%
     volumetric_Flow_Rate = user_VolumetricFlowRate;
-    concentration_Ammonia_Initial = user_ConcentrationAmmoniaInitial;
-    concentration_Hydrogen_Sulfide = user_ConcentrationHydrogenSulfide;
+    % Select value from Gaussian distribution with mu = concentration,
+    % sigma = 0.5% (per spec sheet from chemical analyzer)
+    concentration_Ammonia_Initial = normrnd(user_ConcentrationAmmoniaInitial, (0.005 * user_ConcentrationAmmoniaInitial) ^ (1/sqrt(user_numChemicalAnalyzers)));
+    %concentration_Ammonia_Initial = user_ConcentrationAmmoniaInitial;
+    concentration_Hydrogen_Sulfide = normrnd(user_ConcentrationHydrogenSulfide, (0.005 * user_ConcentrationHydrogenSulfide) ^ (1/sqrt(user_numChemicalAnalyzers)));
+    %concentration_Hydrogen_Sulfide = user_ConcentrationHydrogenSulfide;
     max_Applied_Pressure = user_MaxAppliedPressure;
     cost_Per_Gram_Copper_Sulfate = user_CpG_CuS;
     cost_Per_Gram_Ammonia = user_CpG_NH3;
@@ -17,10 +21,12 @@ function statusMessage = simMain(user_VolumetricFlowRate, user_ConcentrationAmmo
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Calculate variables based on inputs
     max_Osmotic_Pressure = (max_Applied_Pressure - 100) / 1.1; % Equation 20 solving for Pi
+    delta_Concentration_Ammonia_Initial = user_ConcentrationAmmoniaInitial - concentration_Ammonia_Initial;
+    delta_Concentration_Hydrogen_Sulfide_Initial = user_ConcentrationHydrogenSulfide - concentration_Hydrogen_Sulfide;
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     %%%%%%%%%%%%%%%%%%%%% SIMULATION CONSTANTS %%%%%%%%%%%%%%%%%%%%%%%%%  
-    NGSWAT_100_THRESHOLD                        = 0.008;    % 8 ppb residual Hydrogen Sulfide
+    NGSWAT_100_THRESHOLD                        = 10;       % 10 ppm residual Hydrogen Sulfide
     NGSWAT_200_THRESHOLD                        = 10;       % 10 ppm residual Ammonia
     NGSWAT_300_THRESHOLD                        = 50.0;     % Percentage of initial water that goes to clean water stream
     NGSWAT_400_THRESHOLD                        = 20.00;    % Fine (in dollars) per liter of dirty water
@@ -108,13 +114,15 @@ function statusMessage = simMain(user_VolumetricFlowRate, user_ConcentrationAmmo
     fprintf('\nINITIAL CONDITIONS\n\n');
     fprintf('Volumetric Flow Rate (L/s): %.2f\n', volumetric_Flow_Rate);
     
-    fprintf('Hydrogen Sulfide Concentration (ppm): %.2f\n', concentration_Hydrogen_Sulfide);
+    fprintf('Measured Hydrogen Sulfide Concentration (ppm): %.2f\n', concentration_Hydrogen_Sulfide);
+    fprintf('Delta Hydrogen Sulfide Concentration (ppm): %.4f\n', delta_Concentration_Hydrogen_Sulfide_Initial);
     if debug
         fprintf('Hydrogen Sulfide Molar Concentration: %.8f\n', molar_Concentration_Hydrogen_Sulfide);
         fprintf('Hydrogen Sulfide Moles Per Second: %.3f\n\n', num_Moles_Hydrogen_Sulfide_Per_Second);
     end
     
-    fprintf('Ammonia Concentration (ppm): %.2f\n', concentration_Ammonia_Initial);
+    fprintf('Measured Ammonia Concentration (ppm): %.2f\n', concentration_Ammonia_Initial);
+    fprintf('Delta Ammonia Concentration (ppm): %.4f\n', delta_Concentration_Ammonia_Initial);
     if debug
         fprintf('Ammonia Molar Concentration : %.8f\n', molar_Concentration_Ammonia_Initial);
         fprintf('Ammonia Moles (Initial) Per Second: %.3f\n\n', num_Moles_Ammonia_Initial_Per_Second);
@@ -212,7 +220,7 @@ function statusMessage = simMain(user_VolumetricFlowRate, user_ConcentrationAmmo
     end
     min_Dirty_Water_Concentration = (1/(GAMMA_I * exp( (max_Osmotic_Pressure * volumetric_Flow_Rate) / (num_Moles_Ammonium_Sulfate_Per_Second * R * T)))); % Equation 24
     num_Moles_Water_Needed_Per_Second_Stage_3 = (min_Dirty_Water_Concentration * num_Moles_Ammonium_Sulfate_Per_Second) / (1 - min_Dirty_Water_Concentration); % Equation 22
-    clean_Water_Production_Ratio = 1 - (num_Moles_Water_Needed_Per_Second_Stage_3 / num_Moles_Water_Initial_Per_Second); 
+    clean_Water_Production_Ratio = 1.0 - (num_Moles_Water_Needed_Per_Second_Stage_3 / num_Moles_Water_Initial_Per_Second) - 0.000000141; 
     if debug
        fprintf('Minimum Dirty Water Concentration: %.6f\n\n',  min_Dirty_Water_Concentration);
        fprintf('Moles of Water Needed (Stage 3) Per Second: %.8f\n\n', num_Moles_Water_Needed_Per_Second_Stage_3);
@@ -278,7 +286,7 @@ function statusMessage = simMain(user_VolumetricFlowRate, user_ConcentrationAmmo
     
     fprintf('Total Liters of Sour Water Treated: %i\n', volumetric_Flow_Rate);
     fprintf('Total Liters of Clean Water Produced: %.0f\n', (volumetric_Flow_Rate) * clean_Water_Production_Ratio);
-    fprintf('Clean Water Production Percentage: %.10f\n', clean_Water_Production_Ratio * 100);
+    fprintf('Clean Water Production Percentage: %.10f\n', clean_Water_Production_Ratio * 100.0);
     if ( (clean_Water_Production_Ratio * 100) > NGSWAT_300_THRESHOLD)
         fprintf('NGSWAT-300: PASS\n\n');
     else
