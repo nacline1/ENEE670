@@ -29,6 +29,7 @@ Partial Class frmMain
         Me.Label8 = New System.Windows.Forms.Label()
         Me.cmdStart = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label38 = New System.Windows.Forms.Label()
         Me.txtNumAnalyzers = New System.Windows.Forms.TextBox()
         Me.txtTimePerStep = New System.Windows.Forms.TextBox()
         Me.Label30 = New System.Windows.Forms.Label()
@@ -121,7 +122,6 @@ Partial Class frmMain
         Me.CloseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Label38 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -205,6 +205,15 @@ Partial Class frmMain
         Me.GroupBox1.TabIndex = 11
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Initial Conditions"
+        '
+        'Label38
+        '
+        Me.Label38.Location = New System.Drawing.Point(503, 55)
+        Me.Label38.Name = "Label38"
+        Me.Label38.Size = New System.Drawing.Size(116, 21)
+        Me.Label38.TabIndex = 29
+        Me.Label38.Text = "# Chemical Analyzers"
+        Me.Label38.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'txtNumAnalyzers
         '
@@ -676,7 +685,7 @@ Partial Class frmMain
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(116, 30)
         Me.Label10.TabIndex = 9
-        Me.Label10.Text = "NGSWAT-400"
+        Me.Label10.Text = "NGSWAT-SYS-40000"
         Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label16
@@ -685,7 +694,7 @@ Partial Class frmMain
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(116, 23)
         Me.Label16.TabIndex = 3
-        Me.Label16.Text = "NGSWAT-100"
+        Me.Label16.Text = "NGSWAT-SYS-10000"
         Me.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label17
@@ -694,7 +703,7 @@ Partial Class frmMain
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(116, 23)
         Me.Label17.TabIndex = 7
-        Me.Label17.Text = "NGSWAT-300"
+        Me.Label17.Text = "NGSWAT-SYS-30000"
         Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label20
@@ -703,7 +712,7 @@ Partial Class frmMain
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(116, 23)
         Me.Label20.TabIndex = 5
-        Me.Label20.Text = "NGSWAT-200"
+        Me.Label20.Text = "NGSWAT-SYS-20000"
         Me.Label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'GroupBox4
@@ -743,7 +752,7 @@ Partial Class frmMain
         Me.GroupBox5.Size = New System.Drawing.Size(143, 74)
         Me.GroupBox5.TabIndex = 8
         Me.GroupBox5.TabStop = False
-        Me.GroupBox5.Text = "Stage 1"
+        Me.GroupBox5.Text = "CSTR"
         '
         'txtGrams_CuS_Per_Second
         '
@@ -776,7 +785,7 @@ Partial Class frmMain
         Me.GroupBox7.Size = New System.Drawing.Size(403, 83)
         Me.GroupBox7.TabIndex = 10
         Me.GroupBox7.TabStop = False
-        Me.GroupBox7.Text = "Stage 3"
+        Me.GroupBox7.Text = "Reverse Osmosis"
         '
         'Label29
         '
@@ -970,7 +979,7 @@ Partial Class frmMain
         Me.GroupBox6.Size = New System.Drawing.Size(254, 74)
         Me.GroupBox6.TabIndex = 9
         Me.GroupBox6.TabStop = False
-        Me.GroupBox6.Text = "Stage 2"
+        Me.GroupBox6.Text = "Solid Separator"
         '
         'txtGrams_NH3_Per_Second
         '
@@ -1084,15 +1093,6 @@ Partial Class frmMain
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
         Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
         Me.AboutToolStripMenuItem.Text = "About"
-        '
-        'Label38
-        '
-        Me.Label38.Location = New System.Drawing.Point(503, 55)
-        Me.Label38.Name = "Label38"
-        Me.Label38.Size = New System.Drawing.Size(116, 21)
-        Me.Label38.TabIndex = 29
-        Me.Label38.Text = "# Chemical Analyzers"
-        Me.Label38.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'frmMain
         '

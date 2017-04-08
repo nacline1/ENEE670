@@ -8,6 +8,8 @@
     Private total_FinalConcentration_Hydrogen_Sulfide As Double = 0.0
     Private total_FinalConcentration_Ammonia As Double = 0.0
     Private total_CleanWater_Percentage As Double = 0.0
+    Private cost_of_power_per_second As Double = 0.0
+    Private cost_of_chemicals_per_second As Double = 0.0
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         MatLabHandle = CreateObject("Matlab.Application")
@@ -35,6 +37,10 @@
                 txtCurrentAmmoniaConcentration_Final.Text = line.Split(":")(1).Trim()
             ElseIf line.Contains("Clean Water Production Percentage") Then
                 txtCurrentCleanWaterPercentage.Text = line.Split(":")(1).Trim()
+            ElseIf line.Contains("Cost of Power Per Second") Then
+                cost_of_power_per_second = line.Split(":")(1).Trim()
+            ElseIf line.Contains("Cost of Chemicals Per Second") Then
+                cost_of_chemicals_per_second = line.Split(":")(1).Trim()
             ElseIf line.Contains("Total Cost of Simulation Per Liter") Then
                 txtCurrentCostPerSecond.Text = "$" + line.Split(":")(1).Trim()
                 ' Check for Intermediate Simulation Text
@@ -67,7 +73,7 @@
         modSystemStatus.writeToLog({DateTime.Now.ToString(), "System Status Message,", ",,,,,,,", 'Skip the entries for the Start Command so the headers align
                                     txtVolumetricFlowRate.Text, txtMeasuredH2SConcentration.Text, txtMeasuredNH3Concentration.Text,
                                     txtMaxPressure.Text, txtCurrentHydrogenSulfideConcentration_Final.Text, txtCurrentAmmoniaConcentration_Final.Text,
-                                    txtCurrentCleanWaterPercentage.Text, Double.Parse(txtCurrentCostPerSecond.Text).ToString(), txtGrams_CuS_Per_Second.Text, txtGrams_NH3_Per_Second.Text,
+                                    txtCurrentCleanWaterPercentage.Text, cost_of_power_per_second, cost_of_chemicals_per_second, Double.Parse(txtCurrentCostPerSecond.Text).ToString(), txtGrams_CuS_Per_Second.Text, txtGrams_NH3_Per_Second.Text,
                                     txtGrams_H2SO4_Per_Second.Text, txtNGSWAT_100.Text, txtNGSWAT_200.Text, txtNGSWAT_300.Text, txtNGSWAT_400.Text})
     End Sub
 
@@ -316,7 +322,7 @@
         txtAverageCleanWaterPercentage.Text = FormatNumber(total_CleanWater_Percentage / CDbl(txtSimTime.Text), 6)
 
         modSystemStatus.writeToLog({DateTime.Now.ToString(), "Simulation Tick,", ",,,,,,,", 'Skip the entries for the Start Command so the headers align
-                            ",,,,,,,,,,,,,,", 'Skip the entries for the System Status message so the headers align
+                            ",,,,,,,,,,,,,,,,", 'Skip the entries for the System Status message so the headers align
                             txtSimTime.Text, txtSegmentTime.Text, Double.Parse(txtCurrentVolumeTreated.Text).ToString(), Double.Parse(txtCurrentCost.Text).ToString(),
                             txtMaxHydrogenSulfideConcentration_Final.Text, txtMinHydrogenSulfideConcentration_Final.Text,
                             txtMaxAmmoniaConcentration_Final.Text, txtMinAmmoniaConcentration_Final.Text,

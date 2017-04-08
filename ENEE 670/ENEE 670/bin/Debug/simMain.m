@@ -240,8 +240,6 @@ function statusMessage = simMain(user_VolumetricFlowRate, user_ConcentrationAmmo
 	cost_Power_Per_Second = calculatePowerCost();
     cost_Total_Per_Second = cost_Chemicals_Per_Second_Copper_Sulfate + cost_Chemicals_Per_Second_Total_Ammonia + cost_Chemicals_Per_Second_Sulfuric_Acid + cost_Power_Per_Second;
 
-    fprintf('Cost of Power Per Second: %.12f\n', cost_Power_Per_Second);
-    fprintf('Cost of Chemicals Per Second: %.12f\n', cost_Chemicals_Per_Second_Copper_Sulfate + cost_Chemicals_Per_Second_Total_Ammonia + cost_Chemicals_Per_Second_Sulfuric_Acid);
     if debug
        fprintf('Cost of Copper (II) Sulfate Per Second: $%.2f\n',  cost_Chemicals_Per_Second_Copper_Sulfate);
        fprintf('Cost of Ammonia Per Second: $%.2f\n',  cost_Chemicals_Per_Second_Total_Ammonia);
