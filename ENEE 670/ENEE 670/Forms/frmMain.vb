@@ -83,8 +83,8 @@
         txtCurrentCostPerLiter.Text = FormatNumber((CDbl(txtCurrentCostPerSecond.Text) / CDbl(txtVolumetricFlowRate.Text)), 4)
 
         modSystemStatus.writeToLog({DateTime.Now.ToString(), "System Status Message,", ",,,,,,,", 'Skip the entries for the Start Command so the headers align
-                                    txtVolumetricFlowRate.Text, txtMeasuredH2SConcentration.Text, txtMeasuredNH3Concentration.Text,
-                                    txtMaxPressure.Text, concentration_H2S_leaving_CSTR, concentration_NH3_leaving_CSTR, concentration_H2S_leaving_SSU, concentration_NH3_leaving_SSU, txtCurrentHydrogenSulfideConcentration_Final.Text, txtCurrentAmmoniaConcentration_Final.Text,
+                                    txtVolumetricFlowRate.Text, txtMeasuredH2SConcentration.Text, txtMeasuredNH3Concentration.Text, 1000000 - Convert.ToDouble(txtMeasuredH2SConcentration.Text) - Convert.ToDouble(txtMeasuredNH3Concentration.Text),
+                                    txtMaxPressure.Text, concentration_H2S_leaving_CSTR, concentration_NH3_leaving_CSTR, concentration_H2S_leaving_SSU, concentration_NH3_leaving_SSU, txtCurrentHydrogenSulfideConcentration_Final.Text, txtCurrentAmmoniaConcentration_Final.Text, 1000000 - Convert.ToDouble(txtCurrentHydrogenSulfideConcentration_Final.Text) - Convert.ToDouble(txtCurrentAmmoniaConcentration_Final.Text),
                                     txtCurrentCleanWaterPercentage.Text, cost_of_power_per_second, cost_of_chemicals_per_second, Double.Parse(txtCurrentCostPerSecond.Text).ToString(), txtGrams_CuS_Per_Second.Text, txtGrams_NH3_Per_Second.Text,
                                     txtGrams_H2SO4_Per_Second.Text, txtNGSWAT_100.Text, txtNGSWAT_200.Text, txtNGSWAT_300.Text, txtNGSWAT_400.Text})
     End Sub
@@ -334,7 +334,7 @@
         txtAverageCleanWaterPercentage.Text = FormatNumber(total_CleanWater_Percentage / CDbl(txtSimTime.Text), 6)
 
         modSystemStatus.writeToLog({DateTime.Now.ToString(), "Simulation Tick,", ",,,,,,,", 'Skip the entries for the Start Command so the headers align
-                            ",,,,,,,,,,,,,,,,,,,,", 'Skip the entries for the System Status message so the headers align
+                            ",,,,,,,,,,,,,,,,,,,,,,", 'Skip the entries for the System Status message so the headers align
                             txtSimTime.Text, txtSegmentTime.Text, Double.Parse(txtCurrentVolumeTreated.Text).ToString(), Double.Parse(txtCurrentCost.Text).ToString(),
                             txtMaxHydrogenSulfideConcentration_Final.Text, txtMinHydrogenSulfideConcentration_Final.Text,
                             txtMaxAmmoniaConcentration_Final.Text, txtMinAmmoniaConcentration_Final.Text,
