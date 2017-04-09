@@ -550,7 +550,7 @@ Partial Class frmMain
         Me.Label24.Name = "Label24"
         Me.Label24.Size = New System.Drawing.Size(116, 23)
         Me.Label24.TabIndex = 13
-        Me.Label24.Text = "Total Cost"
+        Me.Label24.Text = "Total Cost ($)"
         Me.Label24.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label11
@@ -717,6 +717,7 @@ Partial Class frmMain
         '
         'GroupBox4
         '
+        Me.GroupBox4.Controls.Add(Me.Label31)
         Me.GroupBox4.Controls.Add(Me.GroupBox5)
         Me.GroupBox4.Controls.Add(Me.GroupBox7)
         Me.GroupBox4.Controls.Add(Me.Label3)
@@ -731,7 +732,6 @@ Partial Class frmMain
         Me.GroupBox4.Controls.Add(Me.txtCurrentCostPerLiter)
         Me.GroupBox4.Controls.Add(Me.Label32)
         Me.GroupBox4.Controls.Add(Me.txtCurrentCost)
-        Me.GroupBox4.Controls.Add(Me.Label31)
         Me.GroupBox4.Controls.Add(Me.Label28)
         Me.GroupBox4.Controls.Add(Me.txtCurrentVolumeTreated)
         Me.GroupBox4.Controls.Add(Me.txtCurrentCostPerSecond)
@@ -793,7 +793,7 @@ Partial Class frmMain
         Me.Label29.Name = "Label29"
         Me.Label29.Size = New System.Drawing.Size(116, 30)
         Me.Label29.TabIndex = 13
-        Me.Label29.Text = "Segment Clean Water Percentage"
+        Me.Label29.Text = "Final Clean Water Percentage"
         Me.Label29.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'txtCurrentHydrogenSulfideConcentration_Final
@@ -820,7 +820,7 @@ Partial Class frmMain
         Me.Label26.Name = "Label26"
         Me.Label26.Size = New System.Drawing.Size(116, 30)
         Me.Label26.TabIndex = 7
-        Me.Label26.Text = "Segment Ammonia Concentration (ppm)"
+        Me.Label26.Text = "Final Ammonia Concentration (ppm)"
         Me.Label26.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'txtCurrentAmmoniaConcentration_Final
@@ -838,7 +838,7 @@ Partial Class frmMain
         Me.Label27.Name = "Label27"
         Me.Label27.Size = New System.Drawing.Size(116, 34)
         Me.Label27.TabIndex = 5
-        Me.Label27.Text = "Segment Hydrogen Sulfide Concentration (ppm)"
+        Me.Label27.Text = "Final Hydrogen Sulfide Concentration (ppm)"
         Me.Label27.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label41
@@ -847,7 +847,7 @@ Partial Class frmMain
         Me.Label41.Name = "Label41"
         Me.Label41.Size = New System.Drawing.Size(142, 30)
         Me.Label41.TabIndex = 25
-        Me.Label41.Text = "Measured NH3 Concentration"
+        Me.Label41.Text = "Measured NH3 Concentration (ppm)"
         Me.Label41.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label40
@@ -856,7 +856,7 @@ Partial Class frmMain
         Me.Label40.Name = "Label40"
         Me.Label40.Size = New System.Drawing.Size(142, 30)
         Me.Label40.TabIndex = 24
-        Me.Label40.Text = "Measured H2S Concentration"
+        Me.Label40.Text = "Measured H2S Concentration (ppm)"
         Me.Label40.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'txtMeasuredNH3Concentration
@@ -1112,7 +1112,7 @@ Partial Class frmMain
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "frmMain"
-        Me.Text = "Training"
+        Me.Text = "Next Generation Sour Water Analysis and Treatment Simulator"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)

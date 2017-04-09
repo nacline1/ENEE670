@@ -191,19 +191,15 @@ function statusMessage = simMain(user_VolumetricFlowRate, user_ConcentrationAmmo
     % Simulate reaction probability of Equations 13 and 16
     num_Moles_Hydrogen_Sulfide_Per_Second_Stage_2 = num_Moles_Hydrogen_Sulfide_Per_Second * REACTION_PROBABILITY;
     num_Moles_Ammonia_Per_Second_Stage_2 = (num_Moles_Ammonia_Initial_Per_Second + num_Moles_Ammonia_Additional_Per_Second) * REACTION_PROBABILITY;
-    if debug
-        fprintf('Moles of Hydrogen Sulfide going to Stage 2 Per Second: %e\n\n', num_Moles_Hydrogen_Sulfide_Per_Second_Stage_2);
-        fprintf('Moles of Ammonia going to Stage 2 Per Second: %e\n\n', num_Moles_Ammonia_Per_Second_Stage_2);
-    end
+    fprintf('Concentration of Hydrogen Sulfide leaving CSTR Per Second: %e\n\n', ((num_Moles_Hydrogen_Sulfide_Per_Second_Stage_2 / volumetric_Flow_Rate) / GRAMS_PER_MILLIGRAM) * MOLAR_MASS_HYDROGEN_SULFIDE);
+    fprintf('Concentration of Ammonia leaving CSTR Per Second: %e\n\n', ((num_Moles_Ammonia_Per_Second_Stage_2 / volumetric_Flow_Rate) / GRAMS_PER_MILLIGRAM)* MOLAR_MASS_AMMONIA);
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%% STAGE 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     num_Moles_Hydrogen_Sulfide_Per_Second_Stage_3 = num_Moles_Hydrogen_Sulfide_Per_Second_Stage_2 * STAGE_2_FILTER_PROBABILITY_HYDROGEN_SULFIDE;
     num_Moles_Ammonia_Per_Second_Stage_3 = num_Moles_Ammonia_Per_Second_Stage_2 * STAGE_2_FILTER_PROBABILITY_AMMONIA;
-    if debug
-        fprintf('Moles of Hydrogen Sulfide going to Stage 3 Per Second: %e\n\n', num_Moles_Hydrogen_Sulfide_Per_Second_Stage_3);
-        fprintf('Moles of Ammonia going to Stage 3 Per Second: %e\n\n', num_Moles_Ammonia_Per_Second_Stage_3);
-    end
+    fprintf('Concentration of Hydrogen Sulfide leaving SSU Per Second: %e\n\n', ((num_Moles_Hydrogen_Sulfide_Per_Second_Stage_3 / volumetric_Flow_Rate) / GRAMS_PER_MILLIGRAM) * MOLAR_MASS_HYDROGEN_SULFIDE);
+    fprintf('Concentration of Ammonia leaving SSU Per Second: %e\n\n', ((num_Moles_Ammonia_Per_Second_Stage_3 / volumetric_Flow_Rate) / GRAMS_PER_MILLIGRAM)* MOLAR_MASS_AMMONIA);
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
