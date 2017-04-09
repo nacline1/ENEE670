@@ -47,6 +47,7 @@
         logFile.Write("Final Concentration of Hydrogen Sulfide,")
         logFile.Write("Final Concentration of Ammonia,")
         logFile.Write("Final Concentration of Water,")
+        logFile.Write("Power Consumption (KhW/s),")
         logFile.Write("Clean Water Production Percentage,")
         logFile.Write("Current Cost Of Power Per Second,")
         logFile.Write("Current Cost Of Chemicals Per Second,")
