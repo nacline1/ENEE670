@@ -83,6 +83,7 @@ Partial Class frmMain
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.Label31 = New System.Windows.Forms.Label()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.txtGrams_CuS_Per_Second = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
@@ -104,7 +105,6 @@ Partial Class frmMain
         Me.txtCurrentCostPerLiter = New System.Windows.Forms.Label()
         Me.Label32 = New System.Windows.Forms.Label()
         Me.txtCurrentCost = New System.Windows.Forms.Label()
-        Me.Label31 = New System.Windows.Forms.Label()
         Me.Label28 = New System.Windows.Forms.Label()
         Me.txtCurrentVolumeTreated = New System.Windows.Forms.Label()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
@@ -221,7 +221,7 @@ Partial Class frmMain
         Me.txtNumAnalyzers.Name = "txtNumAnalyzers"
         Me.txtNumAnalyzers.Size = New System.Drawing.Size(116, 20)
         Me.txtNumAnalyzers.TabIndex = 28
-        Me.txtNumAnalyzers.Text = "1"
+        Me.txtNumAnalyzers.Text = "6"
         Me.txtNumAnalyzers.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'txtTimePerStep
@@ -230,7 +230,7 @@ Partial Class frmMain
         Me.txtTimePerStep.Name = "txtTimePerStep"
         Me.txtTimePerStep.Size = New System.Drawing.Size(116, 20)
         Me.txtTimePerStep.TabIndex = 27
-        Me.txtTimePerStep.Text = "1000"
+        Me.txtTimePerStep.Text = "10"
         Me.txtTimePerStep.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label30
@@ -338,7 +338,7 @@ Partial Class frmMain
         Me.txtAmmoniaConcentration_Initial.Name = "txtAmmoniaConcentration_Initial"
         Me.txtAmmoniaConcentration_Initial.Size = New System.Drawing.Size(116, 20)
         Me.txtAmmoniaConcentration_Initial.TabIndex = 14
-        Me.txtAmmoniaConcentration_Initial.Text = "34"
+        Me.txtAmmoniaConcentration_Initial.Text = "12000"
         Me.txtAmmoniaConcentration_Initial.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'txtHydrogenSulfideConcentration_Initial
@@ -347,7 +347,7 @@ Partial Class frmMain
         Me.txtHydrogenSulfideConcentration_Initial.Name = "txtHydrogenSulfideConcentration_Initial"
         Me.txtHydrogenSulfideConcentration_Initial.Size = New System.Drawing.Size(116, 20)
         Me.txtHydrogenSulfideConcentration_Initial.TabIndex = 13
-        Me.txtHydrogenSulfideConcentration_Initial.Text = "17"
+        Me.txtHydrogenSulfideConcentration_Initial.Text = "12000"
         Me.txtHydrogenSulfideConcentration_Initial.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'GroupBox2
@@ -743,6 +743,15 @@ Partial Class frmMain
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Simulation Segment Status"
         '
+        'Label31
+        '
+        Me.Label31.Location = New System.Drawing.Point(136, 109)
+        Me.Label31.Name = "Label31"
+        Me.Label31.Size = New System.Drawing.Size(128, 23)
+        Me.Label31.TabIndex = 15
+        Me.Label31.Text = "Total Segment Cost ($)"
+        Me.Label31.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'GroupBox5
         '
         Me.GroupBox5.Controls.Add(Me.txtGrams_CuS_Per_Second)
@@ -940,15 +949,6 @@ Partial Class frmMain
         Me.txtCurrentCost.Size = New System.Drawing.Size(116, 20)
         Me.txtCurrentCost.TabIndex = 14
         Me.txtCurrentCost.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label31
-        '
-        Me.Label31.Location = New System.Drawing.Point(136, 109)
-        Me.Label31.Name = "Label31"
-        Me.Label31.Size = New System.Drawing.Size(128, 23)
-        Me.Label31.TabIndex = 15
-        Me.Label31.Text = "Total Segment Cost ($)"
-        Me.Label31.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label28
         '
