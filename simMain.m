@@ -28,27 +28,27 @@ function statusMessage = simMain(user_VolumetricFlowRate, user_ConcentrationAmmo
     %%%%%%%%%%%%%%%%%%%%% SIMULATION CONSTANTS %%%%%%%%%%%%%%%%%%%%%%%%%  
     NGSWAT_100_THRESHOLD                        = 10;       % 10 ppm residual Hydrogen Sulfide
     NGSWAT_200_THRESHOLD                        = 10;       % 10 ppm residual Ammonia
-    NGSWAT_300_THRESHOLD                        = 50.0;     % Percentage of initial water that goes to clean water stream
-    NGSWAT_400_THRESHOLD                        = 20.00;    % Fine (in dollars) per liter of dirty water
+    NGSWAT_300_THRESHOLD                        = 95.0;     % Percentage of initial water that goes to clean water stream
+    NGSWAT_400_THRESHOLD                        = 92.46;    % Fine (in dollars) per liter of dirty water [$350/gal]
     MOLAR_MASS_HYDROGEN_SULFIDE                 = 34.08090; % g/mol
     MOLAR_MASS_AMMONIA                          = 17.03100; % g/mol
     MOLAR_MASS_WATER                            = 18.01528; % g/mol
     MOLAR_MASS_COPPER_SULFATE                   = 159.6090; % g/mol
     MOLAR_MASS_SULFURIC_ACID                    = 98.07900; % g/mol
-    NUM_MOLES_AMMONIA_PER_MOLE_SULFURIC_ACID    = 2; % Equation 16
-    REACTION_PROBABILITY                        = 1 - 0.999999; % 99.9999 percent
-    STAGE_2_FILTER_PROBABILITY_HYDROGEN_SULFIDE = 1 - 0.999; % 99.9 percent
-    STAGE_2_FILTER_PROBABILITY_AMMONIA          = 1 - 0.9999; % 99.99 percent
+    NUM_MOLES_AMMONIA_PER_MOLE_SULFURIC_ACID    = 2.0; % Equation 16
+    REACTION_PROBABILITY                        = 1.0 - 0.999999; % 99.9999 percent
+    STAGE_2_FILTER_PROBABILITY_HYDROGEN_SULFIDE = 1.0 - 0.999; % 99.9 percent
+    STAGE_2_FILTER_PROBABILITY_AMMONIA          = 1.0 - 0.9999; % 99.99 percent
     GAMMA_I                                     = 0.8; % Activity Coefficient of Water
-    STAGE_3_FILTER_PROBABILITY_HYDROGEN_SULFIDE = 1 - 0.999;
-    STAGE_3_FILTER_PROBABILITY_AMMONIA          = 1 - 0.9999; % 99.99 percent
+    STAGE_3_FILTER_PROBABILITY_HYDROGEN_SULFIDE = 1.0 - 0.999;
+    STAGE_3_FILTER_PROBABILITY_AMMONIA          = 1.0 - 0.9999; % 99.99 percent
 	R                                           = 8.3144621; % Ideal gas constant (L kPa K^-1 mol^-1)
-    T                                           = 290; % Degrees Kelvin
-	MINUTES_PER_HOUR							= 60;
-    SECONDS_PER_MINUTE							= 60;
+    T                                           = 290.0; % Degrees Kelvin
+	MINUTES_PER_HOUR							= 60.0;
+    SECONDS_PER_MINUTE							= 60.0;
 	GRAMS_PER_MILLIGRAM                         = 0.001; % 1g / 1000mg
-    MILLIGRAMS_PER_GRAM                         = 1 / GRAMS_PER_MILLIGRAM;
-    PARTS_PER_MILLION                           = 1000000;
+    MILLIGRAMS_PER_GRAM                         = 1.0 / GRAMS_PER_MILLIGRAM;
+    PARTS_PER_MILLION                           = 1000000.0;
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     %%%%%%%%%%%%%%%%%%% POWER RELATED CONSTANTS %%%%%%%%%%%%%%%%%%%%%%%%
@@ -214,13 +214,13 @@ function statusMessage = simMain(user_VolumetricFlowRate, user_ConcentrationAmmo
         fprintf('T %f\n',  T);
         fprintf('Exponent: %f\n', (max_Osmotic_Pressure * volumetric_Flow_Rate) / (num_Moles_Ammonium_Sulfate_Per_Second * R * T));
     end
-    min_Dirty_Water_Concentration = (1/(GAMMA_I * exp( (max_Osmotic_Pressure * volumetric_Flow_Rate) / (num_Moles_Ammonium_Sulfate_Per_Second * R * T)))); % Equation 24
+    min_Dirty_Water_Concentration = (1/(GAMMA_I * exp( (max_Osmotic_Pressure * volumetric_Flow_Rate) / (num_Moles_Water_Initial_Per_Second * R * T)))); % Equation 24
     num_Moles_Water_Needed_Per_Second_Stage_3 = (min_Dirty_Water_Concentration * num_Moles_Ammonium_Sulfate_Per_Second) / (1 - min_Dirty_Water_Concentration); % Equation 22
-    clean_Water_Production_Ratio = 1.0 - (num_Moles_Water_Needed_Per_Second_Stage_3 / num_Moles_Water_Initial_Per_Second) - 0.000000141; 
+    clean_Water_Production_Ratio = 1.0 - (num_Moles_Water_Needed_Per_Second_Stage_3 / num_Moles_Water_Initial_Per_Second); 
     if debug
        fprintf('Minimum Dirty Water Concentration: %.6f\n\n',  min_Dirty_Water_Concentration);
        fprintf('Moles of Water Needed (Stage 3) Per Second: %.8f\n\n', num_Moles_Water_Needed_Per_Second_Stage_3);
-       fprintf('Clean Water Production Ratio: %.10f\n\n', clean_Water_Production_Ratio);
+       fprintf('Clean Water Production Ratio: %.15f\n\n', clean_Water_Production_Ratio);
     end
 
     num_Moles_Hydrogen_Sulfide_Per_Second_Final = num_Moles_Hydrogen_Sulfide_Per_Second_Stage_3 * STAGE_3_FILTER_PROBABILITY_HYDROGEN_SULFIDE;
@@ -268,14 +268,14 @@ function statusMessage = simMain(user_VolumetricFlowRate, user_ConcentrationAmmo
         fprintf('Chemical Cost Per Second: $%.2f\n',  cost_Total_Per_Second - cost_Power_Per_Second);
     end
 
-    fprintf('Final Concentration of Hydrogen Sulfide Per Second: %.4e\n', (num_Moles_Hydrogen_Sulfide_Per_Second_Final * MOLAR_MASS_HYDROGEN_SULFIDE) * MILLIGRAMS_PER_GRAM);
+    fprintf('Final Concentration of Hydrogen Sulfide Per Second: %.4e\n', ((num_Moles_Hydrogen_Sulfide_Per_Second_Final / volumetric_Flow_Rate) / GRAMS_PER_MILLIGRAM) * MOLAR_MASS_HYDROGEN_SULFIDE);
     if( ((num_Moles_Hydrogen_Sulfide_Per_Second_Final * MOLAR_MASS_HYDROGEN_SULFIDE) * MILLIGRAMS_PER_GRAM) < NGSWAT_100_THRESHOLD)
         fprintf('NGSWAT-100: PASS\n\n');
     else
         fprintf('NGSWAT-100: FAIL\n\n');
     end
     
-    fprintf('Final Concentration of Ammonia Per Second: %.4e\n', (num_Moles_Ammonia_Per_Second_Final * MOLAR_MASS_AMMONIA) * MILLIGRAMS_PER_GRAM);
+    fprintf('Final Concentration of Ammonia Per Second: %.4e\n', ((num_Moles_Ammonia_Per_Second_Final / volumetric_Flow_Rate) / GRAMS_PER_MILLIGRAM) * MOLAR_MASS_AMMONIA);
     if ( ((num_Moles_Ammonia_Per_Second_Final * MOLAR_MASS_AMMONIA) * MILLIGRAMS_PER_GRAM) < NGSWAT_200_THRESHOLD)
         fprintf('NGSWAT-200: PASS\n\n');
     else
