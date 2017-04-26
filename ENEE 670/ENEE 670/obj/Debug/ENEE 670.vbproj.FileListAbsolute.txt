@@ -16,7 +16,6 @@ C:\Users\Berlioz\Documents\School Stuff\ENEE670-master (1)\ENEE670-master\ENEE 6
 C:\Users\Berlioz\Documents\School Stuff\ENEE670-master (1)\ENEE670-master\ENEE 670\ENEE 670\bin\Debug\ENEE 670.exe
 C:\Users\Berlioz\Documents\School Stuff\ENEE670-master (1)\ENEE670-master\ENEE 670\ENEE 670\bin\Debug\ENEE 670.pdb
 C:\Users\Berlioz\Documents\School Stuff\ENEE670-master (1)\ENEE670-master\ENEE 670\ENEE 670\bin\Debug\ENEE 670.xml
-C:\Users\Berlioz\Documents\School Stuff\ENEE670-master (1)\ENEE670-master\ENEE 670\ENEE 670\obj\Debug\ENEE 670.vbprojResolveAssemblyReference.cache
 C:\Users\Berlioz\Documents\School Stuff\ENEE670-master (1)\ENEE670-master\ENEE 670\ENEE 670\obj\Debug\ENEE_670.frmMain.resources
 C:\Users\Berlioz\Documents\School Stuff\ENEE670-master (1)\ENEE670-master\ENEE 670\ENEE 670\obj\Debug\ENEE_670.Resources.resources
 C:\Users\Berlioz\Documents\School Stuff\ENEE670-master (1)\ENEE670-master\ENEE 670\ENEE 670\obj\Debug\ENEE 670.vbproj.GenerateResource.Cache

@@ -44,11 +44,11 @@
             ElseIf line.Contains("Concentration of Ammonia leaving SSU") Then
                 concentration_NH3_leaving_SSU = line.Split(":")(1).Trim()
             ElseIf line.Contains("Final Concentration of Hydrogen Sulfide") Then
-                txtCurrentHydrogenSulfideConcentration_Final.Text = CDbl(line.Split(":")(1).Trim()).ToString()
+                txtCurrentHydrogenSulfideConcentration_Final.Text = CDbl(line.Split(":")(1).Trim()).ToString("0.0000")
             ElseIf line.Contains("Final Concentration of Ammonia") Then
-                txtCurrentAmmoniaConcentration_Final.Text = CDbl(line.Split(":")(1).Trim()).ToString()
+                txtCurrentAmmoniaConcentration_Final.Text = CDbl(line.Split(":")(1).Trim()).ToString("0.0000")
             ElseIf line.Contains("Clean Water Production Percentage") Then
-                txtCurrentCleanWaterPercentage.Text = line.Split(":")(1).Trim()
+                txtCurrentCleanWaterPercentage.Text = CDbl(line.Split(":")(1).Trim()).ToString("0.0000")
             ElseIf line.Contains("Cost of Power Per Second") Then
                 cost_of_power_per_second = line.Split(":")(1).Trim()
             ElseIf line.Contains("Cost of Chemicals Per Second") Then
@@ -208,6 +208,7 @@
         txtCurrentHydrogenSulfideConcentration_Final.Text = 0
         txtCurrentAmmoniaConcentration_Final.Text = 0
         txtCurrentCleanWaterPercentage.Text = 0
+        total_CleanWater_Percentage = 0
 
         txtAverageHydrogenSulfideConcentration_Final.Text = -1
         txtMaxHydrogenSulfideConcentration_Final.Text = -1
@@ -321,17 +322,17 @@
         ' Update total final concentration of hydrogen sulfide
         total_FinalConcentration_Hydrogen_Sulfide = total_FinalConcentration_Hydrogen_Sulfide + CDbl(txtCurrentHydrogenSulfideConcentration_Final.Text)
         ' Update average concentration of hydrogen sulfide
-        txtAverageHydrogenSulfideConcentration_Final.Text = (total_FinalConcentration_Hydrogen_Sulfide / CDbl(txtSimTime.Text)).ToString("0.0000e+0")
+        txtAverageHydrogenSulfideConcentration_Final.Text = (total_FinalConcentration_Hydrogen_Sulfide / CDbl(txtSimTime.Text)).ToString("0.0000")
 
         ' Update total final concentration of ammonia
         total_FinalConcentration_Ammonia = total_FinalConcentration_Ammonia + CDbl(txtCurrentAmmoniaConcentration_Final.Text)
         ' Update average concentration of ammonia
-        txtAverageAmmoniaConcentration_Final.Text = (total_FinalConcentration_Ammonia / CDbl(txtSimTime.Text)).ToString("0.0000e+0")
+        txtAverageAmmoniaConcentration_Final.Text = (total_FinalConcentration_Ammonia / CDbl(txtSimTime.Text)).ToString("0.0000")
 
         ' Update total clean water percentage
         total_CleanWater_Percentage = total_CleanWater_Percentage + CDbl(txtCurrentCleanWaterPercentage.Text)
         ' Update average clean water percentage yield
-        txtAverageCleanWaterPercentage.Text = FormatNumber(total_CleanWater_Percentage / CDbl(txtSimTime.Text), 6)
+        txtAverageCleanWaterPercentage.Text = CDbl(total_CleanWater_Percentage / CDbl(txtSimTime.Text)).ToString("0.0000")
 
         modSystemStatus.writeToLog({DateTime.Now.ToString(), "Simulation Tick,", ",,,,,,,", 'Skip the entries for the Start Command so the headers align
                             ",,,,,,,,,,,,,,,,,,,,,,,", 'Skip the entries for the System Status message so the headers align
