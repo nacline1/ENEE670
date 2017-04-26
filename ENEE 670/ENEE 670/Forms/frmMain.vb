@@ -44,9 +44,9 @@
             ElseIf line.Contains("Concentration of Ammonia leaving SSU") Then
                 concentration_NH3_leaving_SSU = line.Split(":")(1).Trim()
             ElseIf line.Contains("Final Concentration of Hydrogen Sulfide") Then
-                txtCurrentHydrogenSulfideConcentration_Final.Text = line.Split(":")(1).Trim()
+                txtCurrentHydrogenSulfideConcentration_Final.Text = CDbl(line.Split(":")(1).Trim()).ToString()
             ElseIf line.Contains("Final Concentration of Ammonia") Then
-                txtCurrentAmmoniaConcentration_Final.Text = line.Split(":")(1).Trim()
+                txtCurrentAmmoniaConcentration_Final.Text = CDbl(line.Split(":")(1).Trim()).ToString()
             ElseIf line.Contains("Clean Water Production Percentage") Then
                 txtCurrentCleanWaterPercentage.Text = line.Split(":")(1).Trim()
             ElseIf line.Contains("Cost of Power Per Second") Then

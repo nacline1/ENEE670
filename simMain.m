@@ -21,8 +21,8 @@ function statusMessage = simMain(user_VolumetricFlowRate, user_ConcentrationAmmo
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Calculate variables based on inputs
     max_Osmotic_Pressure = (max_Applied_Pressure - 100) / 1.1; % Equation 20 solving for Pi
-    delta_Concentration_Ammonia_Initial = user_ConcentrationAmmoniaInitial - concentration_Ammonia_Initial;
-    delta_Concentration_Hydrogen_Sulfide_Initial = user_ConcentrationHydrogenSulfide - concentration_Hydrogen_Sulfide;
+    delta_Concentration_Ammonia_Initial = abs(user_ConcentrationAmmoniaInitial - concentration_Ammonia_Initial);
+    delta_Concentration_Hydrogen_Sulfide_Initial = abs(user_ConcentrationHydrogenSulfide - concentration_Hydrogen_Sulfide);
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     %%%%%%%%%%%%%%%%%%%%% SIMULATION CONSTANTS %%%%%%%%%%%%%%%%%%%%%%%%%  
@@ -189,17 +189,17 @@ function statusMessage = simMain(user_VolumetricFlowRate, user_ConcentrationAmmo
     end
 
     % Simulate reaction probability of Equations 13 and 16
-    num_Moles_Hydrogen_Sulfide_Per_Second_Stage_2 = num_Moles_Hydrogen_Sulfide_Per_Second * REACTION_PROBABILITY;
-    num_Moles_Ammonia_Per_Second_Stage_2 = (num_Moles_Ammonia_Initial_Per_Second + num_Moles_Ammonia_Additional_Per_Second) * REACTION_PROBABILITY;
-    fprintf('Concentration of Hydrogen Sulfide leaving CSTR Per Second: %e\n\n', ((num_Moles_Hydrogen_Sulfide_Per_Second_Stage_2 / volumetric_Flow_Rate) / GRAMS_PER_MILLIGRAM) * MOLAR_MASS_HYDROGEN_SULFIDE);
-    fprintf('Concentration of Ammonia leaving CSTR Per Second: %e\n\n', ((num_Moles_Ammonia_Per_Second_Stage_2 / volumetric_Flow_Rate) / GRAMS_PER_MILLIGRAM)* MOLAR_MASS_AMMONIA);
+    num_Moles_Hydrogen_Sulfide_Per_Second_Stage_2 = (num_Moles_Hydrogen_Sulfide_Per_Second * REACTION_PROBABILITY);
+    num_Moles_Ammonia_Per_Second_Stage_2 = ((num_Moles_Ammonia_Initial_Per_Second + num_Moles_Ammonia_Additional_Per_Second) * REACTION_PROBABILITY);
+    fprintf('Concentration of Hydrogen Sulfide leaving CSTR Per Second: %e\n\n', (((num_Moles_Hydrogen_Sulfide_Per_Second_Stage_2 / volumetric_Flow_Rate) / GRAMS_PER_MILLIGRAM) * MOLAR_MASS_HYDROGEN_SULFIDE) + delta_Concentration_Hydrogen_Sulfide_Initial);
+    fprintf('Concentration of Ammonia leaving CSTR Per Second: %e\n\n', (((num_Moles_Ammonia_Per_Second_Stage_2 / volumetric_Flow_Rate) / GRAMS_PER_MILLIGRAM)* MOLAR_MASS_AMMONIA) + delta_Concentration_Ammonia_Initial);
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%% STAGE 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    num_Moles_Hydrogen_Sulfide_Per_Second_Stage_3 = num_Moles_Hydrogen_Sulfide_Per_Second_Stage_2 * STAGE_2_FILTER_PROBABILITY_HYDROGEN_SULFIDE;
-    num_Moles_Ammonia_Per_Second_Stage_3 = num_Moles_Ammonia_Per_Second_Stage_2 * STAGE_2_FILTER_PROBABILITY_AMMONIA;
-    fprintf('Concentration of Hydrogen Sulfide leaving SSU Per Second: %e\n\n', ((num_Moles_Hydrogen_Sulfide_Per_Second_Stage_3 / volumetric_Flow_Rate) / GRAMS_PER_MILLIGRAM) * MOLAR_MASS_HYDROGEN_SULFIDE);
-    fprintf('Concentration of Ammonia leaving SSU Per Second: %e\n\n', ((num_Moles_Ammonia_Per_Second_Stage_3 / volumetric_Flow_Rate) / GRAMS_PER_MILLIGRAM)* MOLAR_MASS_AMMONIA);
+    num_Moles_Hydrogen_Sulfide_Per_Second_Stage_3 = (num_Moles_Hydrogen_Sulfide_Per_Second_Stage_2 * STAGE_2_FILTER_PROBABILITY_HYDROGEN_SULFIDE);
+    num_Moles_Ammonia_Per_Second_Stage_3 = (num_Moles_Ammonia_Per_Second_Stage_2 * STAGE_2_FILTER_PROBABILITY_AMMONIA);
+    fprintf('Concentration of Hydrogen Sulfide leaving SSU Per Second: %e\n\n', (((num_Moles_Hydrogen_Sulfide_Per_Second_Stage_3 / volumetric_Flow_Rate) / GRAMS_PER_MILLIGRAM) * MOLAR_MASS_HYDROGEN_SULFIDE)) + delta_Concentration_Hydrogen_Sulfide_Initial;
+    fprintf('Concentration of Ammonia leaving SSU Per Second: %e\n\n', (((num_Moles_Ammonia_Per_Second_Stage_3 / volumetric_Flow_Rate) / GRAMS_PER_MILLIGRAM)* MOLAR_MASS_AMMONIA) + delta_Concentration_Ammonia_Initial);
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -223,8 +223,8 @@ function statusMessage = simMain(user_VolumetricFlowRate, user_ConcentrationAmmo
        fprintf('Clean Water Production Ratio: %.15f\n\n', clean_Water_Production_Ratio);
     end
 
-    num_Moles_Hydrogen_Sulfide_Per_Second_Final = num_Moles_Hydrogen_Sulfide_Per_Second_Stage_3 * STAGE_3_FILTER_PROBABILITY_HYDROGEN_SULFIDE;
-    num_Moles_Ammonia_Per_Second_Final = num_Moles_Ammonia_Per_Second_Stage_3 * STAGE_3_FILTER_PROBABILITY_AMMONIA;
+    num_Moles_Hydrogen_Sulfide_Per_Second_Final = (num_Moles_Hydrogen_Sulfide_Per_Second_Stage_3 * STAGE_3_FILTER_PROBABILITY_HYDROGEN_SULFIDE);
+    num_Moles_Ammonia_Per_Second_Final = (num_Moles_Ammonia_Per_Second_Stage_3 * STAGE_3_FILTER_PROBABILITY_AMMONIA);
     if debug
         fprintf('Final Moles of Hydrogen Sulfide Per Second: %e\n\n', num_Moles_Hydrogen_Sulfide_Per_Second_Final);
         fprintf('Final Moles of Ammonia Per Second: %e\n\n', num_Moles_Ammonia_Per_Second_Final);
@@ -268,15 +268,15 @@ function statusMessage = simMain(user_VolumetricFlowRate, user_ConcentrationAmmo
         fprintf('Chemical Cost Per Second: $%.2f\n',  cost_Total_Per_Second - cost_Power_Per_Second);
     end
 
-    fprintf('Final Concentration of Hydrogen Sulfide Per Second: %.4e\n', ((num_Moles_Hydrogen_Sulfide_Per_Second_Final / volumetric_Flow_Rate) / GRAMS_PER_MILLIGRAM) * MOLAR_MASS_HYDROGEN_SULFIDE);
-    if( ((num_Moles_Hydrogen_Sulfide_Per_Second_Final * MOLAR_MASS_HYDROGEN_SULFIDE) * MILLIGRAMS_PER_GRAM) < NGSWAT_100_THRESHOLD)
+    fprintf('Final Concentration of Hydrogen Sulfide Per Second: %.4e\n', (((num_Moles_Hydrogen_Sulfide_Per_Second_Final / volumetric_Flow_Rate) / GRAMS_PER_MILLIGRAM) * MOLAR_MASS_HYDROGEN_SULFIDE) + delta_Concentration_Hydrogen_Sulfide_Initial);
+    if( ((((num_Moles_Hydrogen_Sulfide_Per_Second_Final / volumetric_Flow_Rate) / GRAMS_PER_MILLIGRAM) * MOLAR_MASS_HYDROGEN_SULFIDE) + delta_Concentration_Hydrogen_Sulfide_Initial) < NGSWAT_100_THRESHOLD)
         fprintf('NGSWAT-100: PASS\n\n');
     else
         fprintf('NGSWAT-100: FAIL\n\n');
     end
     
-    fprintf('Final Concentration of Ammonia Per Second: %.4e\n', ((num_Moles_Ammonia_Per_Second_Final / volumetric_Flow_Rate) / GRAMS_PER_MILLIGRAM) * MOLAR_MASS_AMMONIA);
-    if ( ((num_Moles_Ammonia_Per_Second_Final * MOLAR_MASS_AMMONIA) * MILLIGRAMS_PER_GRAM) < NGSWAT_200_THRESHOLD)
+    fprintf('Final Concentration of Ammonia Per Second: %.4e\n', (((num_Moles_Ammonia_Per_Second_Final / volumetric_Flow_Rate) / GRAMS_PER_MILLIGRAM) * MOLAR_MASS_AMMONIA) + delta_Concentration_Ammonia_Initial);
+    if ( ((((num_Moles_Ammonia_Per_Second_Final / volumetric_Flow_Rate) / GRAMS_PER_MILLIGRAM) * MOLAR_MASS_AMMONIA) + delta_Concentration_Ammonia_Initial) < NGSWAT_200_THRESHOLD)
         fprintf('NGSWAT-200: PASS\n\n');
     else
         fprintf('NGSWAT-200: FAIL\n\n');
